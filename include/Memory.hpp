@@ -1,7 +1,6 @@
 #pragma once
 #include "MyConstAndTypedef.hpp"
 #include <map>
-#include <string>
 class Register {
 #ifdef DEBUG
   public:

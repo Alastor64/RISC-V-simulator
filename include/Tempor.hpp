@@ -1,29 +1,15 @@
 #pragma once
 #include "MyConstAndTypedef.hpp"
-template <typename T = word> class Tempor {
+class Tempor {
   private:
-    T val;
+    word val;
     bool written;
 
   public:
-    Tempor() { written = 0; }
-    T &operator=(const T &x) {
-        if (written) {
-            throw "multiply write tempor!";
-        }
-        written = 1;
-        val = x;
-        return val;
-    }
-    T &operator()() {
-        if (!written) {
-            throw "use null tempor!";
-        }
-        return val;
-    }
-    ~Tempor() noexcept(false) {
-        if (!written) {
-            throw "unused tempor";
-        }
-    }
+    Tempor();
+    word &operator=(const word &x);
+    Tempor &operator=(const Tempor &) = delete;
+    word &operator()();
+    void update(); // only update function can call it!
+    ~Tempor() noexcept(false);
 };

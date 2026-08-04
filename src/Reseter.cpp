@@ -1,5 +1,6 @@
 #include "CPU.hpp"
 CPU::Reseter::Reseter(CPU *_) : Module(_) {}
+void CPU::Reseter::update() {}
 void CPU::Reseter::run() {
     if (holder->CLR.getv()) {
         holder->CLR.write(0);

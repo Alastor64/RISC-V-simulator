@@ -3,12 +3,12 @@
 CPU::BranchPrediction::BranchPrediction(CPU *_) : Module(_) {}
 void CPU::BranchPrediction::update() {}
 void CPU::BranchPrediction::run() {
-    const word CLR = holder->CLR.getv();
-    const word blockROB = holder->blockROB.getv();
-    const word blockLSQ = holder->blockLSQ.getv();
-    const word blockRS = holder->blockRS.getv();
-    const word PC = holder->PC.getv();
-    const word CLR_ADDR = holder->CLR_ADDR.getv();
+    cw CLR = holder->CLR.getv();
+    cw blockROB = holder->blockROB.getv();
+    cw blockLSQ = holder->blockLSQ.getv();
+    cw blockRS = holder->blockRS.getv();
+    cw PC = holder->PC.getv();
+    cw CLR_ADDR = holder->CLR_ADDR.getv();
     Tempor ins_PC, ins_PC_next, _PC;
     if (CLR) {
         ins_PC_next = ins_PC = 0;
