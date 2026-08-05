@@ -1,6 +1,6 @@
 #include "Tempor.hpp"
 Tempor::Tempor() { written = 0; }
-word &Tempor::operator=(const word &x) {
+const word &Tempor::operator=(const word &x) {
     if (written) {
         throw "multiply write tempor!";
     }
@@ -8,7 +8,7 @@ word &Tempor::operator=(const word &x) {
     val = x;
     return val;
 }
-word &Tempor::operator()() {
+const word &Tempor::operator()() const {
     if (!written) {
         throw "use null tempor!";
     }

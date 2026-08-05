@@ -6,7 +6,7 @@ void Register::update() {
     val = tmp;
     written = 0;
 }
-word Register::getv() { return val; }
+word Register::getv() const { return val; }
 void Register::write(const word &v) {
     if (written) {
         throw "multiply write register!";

@@ -7,9 +7,9 @@ class Tempor {
 
   public:
     Tempor();
-    word &operator=(const word &x);
+    const word &operator=(const word &x);
     Tempor &operator=(const Tempor &) = delete;
-    word &operator()();
+    const word &operator()() const;
     void update(); // only update function can call it!
     ~Tempor() noexcept(false);
 };

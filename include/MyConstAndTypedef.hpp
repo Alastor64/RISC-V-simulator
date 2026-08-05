@@ -8,7 +8,7 @@ constexpr int MAX_REG_NUM = 1 << 5;
 constexpr word CLEAR_FLAG = 1;
 constexpr word TERMINATE = 1;
 constexpr word NOT_A_REG_ADDR = MAX_REG_NUM;
-constexpr word getLF1(int len) { return FULL1 >> (32 - len); }
+consteval word getLF1(const int len) { return FULL1 >> (32 - len); }
 constexpr byte CHAR_to_HEX(char c) {
     return (c <= '9' ? c - '0' : c - 'A' + 10);
 }
@@ -32,4 +32,14 @@ enum OP {
     OP_CTL_bne,
     OP_CTL_jal,
     OP_CTL_jalr,
+    OP_LSQ_lb,
+    OP_LSQ_lbu,
+    OP_LSQ_lh,
+    OP_LSQ_lhu,
+    OP_LSQ_lw,
+    OP_LSQ_sb,
+    OP_LSQ_sh,
+    OP_LSQ_sw,
+    OP_other_auipc,
+    OP_other_lui,
 };

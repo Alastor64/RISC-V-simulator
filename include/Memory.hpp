@@ -14,7 +14,7 @@ class Register {
   public:
     Register();
     void update();
-    word getv();
+    word getv() const;
     void write(const word &v);
 };
 class Memory {
