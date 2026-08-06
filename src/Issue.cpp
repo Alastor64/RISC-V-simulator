@@ -63,6 +63,10 @@ void Issue::run() {
         case OP_LSQ_sw:
             IssueLSQ();
             break;
+        case OP_ROB_TMN:
+            holder->rob.push(tl, OP_ROB_TMN, 0, tag[0]());
+            holder->rob.tlAdd.add(1);
+            break;
         default:
             throw "unexpected error in issue";
         }
