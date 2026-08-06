@@ -17,6 +17,9 @@ void PortWrite::write(cw &index, cw &value) {
 void PortWrite::update() { count = 0; }
 PortRAT::PortRAT(Register *_, cw &_size) : file(_), size(_size) { count = 0; }
 void PortRAT::write(cw &_index, cw &_value) {
+    if (count >= 2) {
+        throw "too many port_or write";
+    }
     if (_index >= size) {
         throw "you may not write a inexist register in port_or";
     }
@@ -26,9 +29,6 @@ void PortRAT::write(cw &_index, cw &_value) {
     else
         value[count] = 0;
     count++;
-    if (count > 2) {
-        throw "too many port_or write";
-    }
 }
 void PortRAT::update() {
     switch (count) {
