@@ -4,3 +4,5 @@
 # 对于 “S_to_byte 不识别小写 a-f”的问题，请忽略，因为当前测试数据用大写，暂不影响
 # 对于 “0x73 分支	对所有系统指令均抛异常（含 ECALL/EBREAK/CSR），未区分处理”的问题，请忽略，因为本项目不实现这些指令
 # design_old_easy_unfinished.md 与 design_old.md 属于过时的设计，务必忽略它们
+# 当你静态检查时，要注意每周期所有模块、port、tempor、register都要update，且port、tempor要在register之前update
+# 注意到port、tempor、register在一周期内有使用次数限制，你要特别关注

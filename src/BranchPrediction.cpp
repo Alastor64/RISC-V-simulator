@@ -1,7 +1,12 @@
 #include "CPU.hpp"
+#include "MyConstAndTypedef.hpp"
 #include "Tempor.hpp"
 CPU::BranchPrediction::BranchPrediction(CPU *_) : Module(_) {}
-void CPU::BranchPrediction::update() {}
+void CPU::BranchPrediction::update() {
+    ins_PC.update();
+    ins_PC_next.update();
+    _PC.update();
+}
 void CPU::BranchPrediction::run() {
     cw CLR = holder->CLR.getv();
     cw blockROB = holder->blockROB.getv();
@@ -9,8 +14,7 @@ void CPU::BranchPrediction::run() {
     cw blockRS = holder->blockRS.getv();
     cw PC = holder->PC.getv();
     cw CLR_ADDR = holder->CLR_ADDR.getv();
-    Tempor ins_PC, ins_PC_next, _PC;
-    if (CLR) {
+    if (CLR == CLEAR_FLAG) {
         ins_PC_next = ins_PC = 0;
         _PC = CLR_ADDR;
     } else if (blockLSQ || blockROB || blockRS) {

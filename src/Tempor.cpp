@@ -14,11 +14,6 @@ const word &Tempor::operator()() const {
     }
     return val;
 }
-Tempor::~Tempor() noexcept(false) {
-    if (!written) {
-        throw "unused tempor";
-    }
-};
 void Tempor::update() {
     if (!written) {
         throw "unused tempor";

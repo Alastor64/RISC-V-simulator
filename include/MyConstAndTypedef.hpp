@@ -2,7 +2,10 @@
 typedef unsigned char byte;
 typedef unsigned int word;
 typedef const word cw;
-#define DEBUG
+// #define DEBUG
+constexpr word MAX_ROB_PUSH = 8;
+constexpr word ROB_SIZE_WIDTH = 8;
+constexpr word ROB_SIZE = 1 << ROB_SIZE_WIDTH; //>8*3+1
 constexpr word FULL1 = -1;
 constexpr int MAX_REG_NUM = 1 << 5;
 constexpr word CLEAR_FLAG = 1;
@@ -42,4 +45,5 @@ enum OP {
     OP_LSQ_sw,
     OP_other_auipc,
     OP_other_lui,
+    OP_ROB_tmn,
 };

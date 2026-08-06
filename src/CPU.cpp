@@ -1,14 +1,21 @@
 #include "CPU.hpp"
 #include "MyConstAndTypedef.hpp"
 #include <cstdio>
-CPU::CPU() : fetch(this), reseter(this), BP(this), decode(this) {};
+CPU::CPU()
+    : regWrite(reg, MAX_REG_NUM, 1), regRead(reg, MAX_REG_NUM), fetch(this),
+      reseter(this), BP(this), decode(this), issue(this), rat(this),
+      rob(this) {};
 CPU::Module::Module(CPU *_holder) : holder(_holder) {}
 
 void CPU::update() {
+    // port and tempor update must be former than reg
     fetch.update();
     decode.update();
     reseter.update();
     BP.update();
+    rat.update();
+    regWrite.update();
+    regRead.update();
     for (int i = 0; i < MAX_REG_NUM; i++) {
         reg[i].update();
     }
@@ -27,6 +34,7 @@ void CPU::update() {
     rs2_addr.update();
     imm.update();
     PC_guess.update();
+    terminate.update();
 }
 void CPU::init() {
     terminate.write(0);
@@ -35,6 +43,10 @@ void CPU::init() {
     terminate.update();
     CLR.update();
     CLR_ADDR.update();
+    for (int i = 0; i < MAX_REG_NUM; i++) {
+        reg[i].write(0);
+        reg[i].update();
+    }
 }
 void CPU::run() {
     mem.loadInstruction();
@@ -45,6 +57,7 @@ void CPU::run() {
         BP.run();
         reseter.run();
         decode.run();
+        rat.run();
 
         update();
         if (terminate.getv() == TERMINATE)

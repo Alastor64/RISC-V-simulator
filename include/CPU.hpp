@@ -1,6 +1,7 @@
 #pragma once
 #include "Memory.hpp"
 #include "MyConstAndTypedef.hpp"
+#include "Port.hpp"
 #include "Tempor.hpp"
 class CPU {
 #ifdef DEBUG
@@ -9,6 +10,10 @@ class CPU {
   private:
 #endif
     Register reg[MAX_REG_NUM];
+
+  public:
+    PortWrite regWrite;
+    PortRead regRead;
     Memory mem;
     Register PC;
     Register CLR, CLR_ADDR;
@@ -16,25 +21,41 @@ class CPU {
     Register terminate;
     Register ins, ins_PC, ins_PC_next;
     Register op, rd_addr, rs1_addr, rs2_addr, imm, PC_guess;
+    CPU();
+    void init();
+    void run();
     void update();
     class Module {
 #ifdef DEBUG
       public:
 #else
-        protect :
+      protected:
 #endif
         CPU *const holder;
-
-      public:
         Module(CPU *_holder);
     };
     class Fetch : public Module {
+#ifdef DEBUG
+      public:
+#else
+      private:
+#endif
+        Tempor ins;
+
       public:
         Fetch(CPU *_);
         void run();
         void update();
     } fetch;
     class BranchPrediction : public Module {
+
+#ifdef DEBUG
+      public:
+#else
+      private:
+#endif
+        Tempor ins_PC, ins_PC_next, _PC;
+
       public:
         BranchPrediction(CPU *_);
         void run();
@@ -70,9 +91,54 @@ class CPU {
         void run();
         void update();
     } decode;
+    class Issue : public Module {
+#ifdef DEBUG
+      public:
+#else
+      private:
+#endif
+      public:
+        Issue(CPU *_);
+        void run();
+        void update();
+    } issue;
+    class RAT : public Module {
+#ifdef DEBUG
+      public:
+#else
+      private:
+#endif
+        Register tag[MAX_REG_NUM];
 
-  public:
-    CPU();
-    void init();
-    void run();
+      public:
+        PortOr RATOr;
+        PortRead RATRead;
+        RAT(CPU *_);
+        void run();
+        void update();
+    } rat;
+    class ROB : public Module {
+
+#ifdef DEBUG
+      public:
+#else
+      private:
+#endif
+        Register op[ROB_SIZE_WIDTH];
+        Register addr[ROB_SIZE_WIDTH];
+        Register val[ROB_SIZE_WIDTH];
+        Register tag[ROB_SIZE_WIDTH];
+        Register ready[ROB_SIZE_WIDTH];
+        word pushCount;
+        cw maxPushCount;
+        Register hd, tl;
+
+      public:
+        PortRead tagRead;
+        PortRead valRead;
+        ROB(CPU *_);
+        void push(cw &, cw &, cw &, cw &, cw &);
+        void run();
+        void update();
+    } rob;
 };

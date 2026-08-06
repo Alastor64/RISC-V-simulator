@@ -2,14 +2,13 @@
 #include "MyConstAndTypedef.hpp"
 #include "Tempor.hpp"
 CPU::Fetch::Fetch(CPU *_) : Module(_) {}
-void CPU::Fetch::update() {}
+void CPU::Fetch::update() { ins.update(); }
 void CPU::Fetch::run() {
     const word CLR = holder->CLR.getv();
     const word blockROB = holder->blockROB.getv();
     const word blockLSQ = holder->blockLSQ.getv();
     const word blockRS = holder->blockRS.getv();
     const word PC = holder->PC.getv();
-    Tempor ins;
     if (CLR == CLEAR_FLAG || blockLSQ || blockROB || blockRS) {
         ins = 0;
     } else {

@@ -39,7 +39,13 @@ void CPU::Decode::run() {
     }
     PC_guess = ins_PC_next();
     DCdecode();
-    DCexecute();
+    if (tmp() == 0x0ff00513) {
+        op = OP_ROB_tmn;
+        rd_addr = rs1_addr = rs2_addr = NOT_A_REG_ADDR;
+        imm = 0;
+    } else {
+        DCexecute();
+    }
 
     holder->op.write(op());
     holder->rd_addr.write(rd_addr());

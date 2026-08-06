@@ -3,8 +3,10 @@
 #include <iostream>
 Register::Register() { written = 0; }
 void Register::update() {
-    val = tmp;
-    written = 0;
+    if (written) {
+        val = tmp;
+        written = 0;
+    }
 }
 word Register::getv() const { return val; }
 void Register::write(const word &v) {
