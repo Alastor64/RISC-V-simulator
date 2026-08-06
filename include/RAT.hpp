@@ -11,7 +11,7 @@ class RAT : public Module {
     Register tag[MAX_REG_NUM];
 
   public:
-    PortRAT RATOr;
+    PortRAT RATWrite;
     PortRead RATRead;
     RAT(CPU *_);
     void run();

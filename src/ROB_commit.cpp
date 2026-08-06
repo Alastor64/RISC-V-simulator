@@ -17,7 +17,7 @@ void ROB::commit() {
             if (a != 0) {
                 holder->regWrite.write(a, v);
                 if (holder->rat.RATRead.read(a) == t)
-                    holder->rat.RATOr.write(a, 0);
+                    holder->rat.RATWrite.write(a, 0);
             }
             break;
         case OP_ROB_CTL:

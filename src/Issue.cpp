@@ -35,7 +35,7 @@ void Issue::run() {
         case OP_other_lui:
             holder->rob.push(tl, OP_ROB_ALU, rd_addr, tag[0]());
             holder->rob.tlAdd.add(1);
-            holder->rat.RATOr.write(rd_addr, tag[0]());
+            holder->rat.RATWrite.write(rd_addr, tag[0]());
             break;
         case OP_CTL_beq:
         case OP_CTL_bge:
@@ -49,7 +49,7 @@ void Issue::run() {
         case OP_CTL_jal:
         case OP_CTL_jalr:
             holder->rob.push(tl, OP_ROB_ALU, rd_addr, tag[0]());
-            holder->rat.RATOr.write(rd_addr, tag[0]());
+            holder->rat.RATWrite.write(rd_addr, tag[0]());
             holder->rob.push(ptl[1](), OP_ROB_CTL, PC_guess, tag[1]());
             holder->rob.tlAdd.add(2);
             break;

@@ -39,7 +39,7 @@ void Issue::IssueLSQ() {
         }
         holder->rob.push(ptl[pushNum() - 1](), OP_ROB_ALU, rd_addr,
                          tag[pushNum() - 1]());
-        holder->rat.RATOr.write(rd_addr, tag[pushNum() - 1]());
+        holder->rat.RATWrite.write(rd_addr, tag[pushNum() - 1]());
         break;
     case OP_LSQ_sb:
     case OP_LSQ_sh:
