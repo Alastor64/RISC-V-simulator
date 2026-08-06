@@ -12,7 +12,7 @@ class PortWrite {
     void write(cw &index, cw &value);
     void update();
 };
-class PortOr { // 将两个port的结果按位或后输出
+class PortRAT { // 将两个port的结果按位或后输出
     Register *const file;
     cw size;
     word count;
@@ -20,7 +20,7 @@ class PortOr { // 将两个port的结果按位或后输出
     word value[2];
 
   public:
-    PortOr(Register *_, cw &_size);
+    PortRAT(Register *_, cw &_size);
     void write(cw &_index, cw &_value);
     void update();
 };

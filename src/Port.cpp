@@ -15,19 +15,22 @@ void PortWrite::write(cw &index, cw &value) {
     }
 }
 void PortWrite::update() { count = 0; }
-PortOr::PortOr(Register *_, cw &_size) : file(_), size(_size) { count = 0; }
-void PortOr::write(cw &_index, cw &_value) {
-    if (_index > size) {
+PortRAT::PortRAT(Register *_, cw &_size) : file(_), size(_size) { count = 0; }
+void PortRAT::write(cw &_index, cw &_value) {
+    if (_index >= size) {
         throw "you may not write a inexist register in port_or";
     }
     index[count] = _index;
-    value[count] = _value;
+    if (_index)
+        value[count] = _value;
+    else
+        value[count] = 0;
     count++;
     if (count > 2) {
         throw "too many port_or write";
     }
 }
-void PortOr::update() {
+void PortRAT::update() {
     switch (count) {
     case 0:
         break;

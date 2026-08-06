@@ -17,9 +17,12 @@ void ROB::push(cw &index, cw &_op, cw &_addr, cw &_tag) {
     readyWrite.write(index, (_op == OP_ROB_TMN));
 }
 void ROB::update() {
+
     ifPop.update();
     ifMEM.update();
     tlAdd.update();
+    opRead.update();
+    addrRead.update();
     tagRead.update();
     valRead.update();
     readyRead.update();
