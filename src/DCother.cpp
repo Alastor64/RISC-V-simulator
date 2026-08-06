@@ -1,6 +1,6 @@
-#include "CPU.hpp"
+#include "Decode.hpp"
 #include "MyConstAndTypedef.hpp"
-void CPU::Decode::DCother() {
+void Decode::DCother() {
     imm = imm_U();
     rd_addr = _rd_addr();
     rs2_addr = NOT_A_REG_ADDR;

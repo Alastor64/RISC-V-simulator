@@ -1,5 +1,5 @@
-#include "CPU.hpp"
-void CPU::Decode::DCexecute() {
+#include "Decode.hpp"
+void Decode::DCexecute() {
     switch (opcode()) {
     case 0x0:
         DCnop();

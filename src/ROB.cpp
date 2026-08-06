@@ -1,6 +1,6 @@
 #include "CPU.hpp"
 #include "MyConstAndTypedef.hpp"
-CPU::ROB::ROB(CPU *_)
+ROB::ROB(CPU *_)
     : Module(_), tlAdd(&tl, &gene), tagRead(tag, ROB_SIZE),
       readyRead(ready, ROB_SIZE), opRead(op, ROB_SIZE),
       addrRead(addr, ROB_SIZE), valRead(val, ROB_SIZE),
@@ -9,14 +9,14 @@ CPU::ROB::ROB(CPU *_)
       addrWrite(addr, ROB_SIZE, MAX_ROB_WRITE_COUNT),
       tagWrite(tag, ROB_SIZE, MAX_ROB_WRITE_COUNT),
       readyWrite(ready, ROB_SIZE, MAX_ROB_WRITE_COUNT) {}
-void CPU::ROB::push(cw &index, cw &_op, cw &_addr, cw &_val, cw &_tag) {
+void ROB::push(cw &index, cw &_op, cw &_addr, cw &_val, cw &_tag) {
     tagWrite.write(index, _tag);
     opWrite.write(index, _op);
     addrWrite.write(index, _addr);
     valWrite.write(index, _val);
     readyWrite.write(index, 0);
 }
-void CPU::ROB::update() {
+void ROB::update() {
     ifPop.update();
     ifMEM.update();
     tlAdd.update();
@@ -39,7 +39,7 @@ void CPU::ROB::update() {
     tl.update();
     gene.update();
 }
-void CPU::ROB::run() {
+void ROB::run() {
     cw CLR = holder->CLR.getv();
     if (CLR == CLEAR_FLAG) {
         hd.write(0);

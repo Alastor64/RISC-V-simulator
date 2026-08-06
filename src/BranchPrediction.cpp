@@ -1,13 +1,13 @@
 #include "CPU.hpp"
 #include "MyConstAndTypedef.hpp"
 #include "Tempor.hpp"
-CPU::BranchPrediction::BranchPrediction(CPU *_) : Module(_) {}
-void CPU::BranchPrediction::update() {
+BranchPrediction::BranchPrediction(CPU *_) : Module(_) {}
+void BranchPrediction::update() {
     ins_PC.update();
     ins_PC_next.update();
     _PC.update();
 }
-void CPU::BranchPrediction::run() {
+void BranchPrediction::run() {
     cw CLR = holder->CLR.getv();
     cw blockROB = holder->blockROB.getv();
     cw blockLSQ = holder->blockLSQ.getv();

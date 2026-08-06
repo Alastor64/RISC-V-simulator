@@ -1,6 +1,6 @@
 #include "CPU.hpp"
 #include "MyConstAndTypedef.hpp"
-void CPU::ROB::readCDB() {
+void ROB::readCDB() {
     cw CDB_tag[2] = {holder->CDB_RS_tag.getv(), holder->CDB_LSQ_tag.getv()};
     cw CDB_val[2] = {holder->CDB_RS_val.getv(), holder->CDB_LSQ_val.getv()};
     for (int t = 0; t < 2; t++) {

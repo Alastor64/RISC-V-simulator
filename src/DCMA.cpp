@@ -1,6 +1,6 @@
-#include "CPU.hpp"
+#include "Decode.hpp"
 #include "MyConstAndTypedef.hpp"
-void CPU::Decode::DCMA() {
+void Decode::DCMA() {
     rs1_addr = _rs1_addr();
     switch (opcode()) {
     case 0x3:

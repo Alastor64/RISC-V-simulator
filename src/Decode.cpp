@@ -1,8 +1,8 @@
 #include "CPU.hpp"
 #include "MyConstAndTypedef.hpp"
 #include "Tempor.hpp"
-CPU::Decode::Decode(CPU *_) : Module(_) {}
-void CPU::Decode::update() {
+Decode::Decode(CPU *_) : Module(_) {}
+void Decode::update() {
     ins.update();
     ins_PC.update();
     ins_PC_next.update();
@@ -26,7 +26,7 @@ void CPU::Decode::update() {
     _rs1_addr.update();
     _rs2_addr.update();
 }
-void CPU::Decode::run() {
+void Decode::run() {
     ins = holder->ins.getv();
     ins_PC = holder->ins_PC.getv();
     ins_PC_next = holder->ins_PC_next.getv();
@@ -54,7 +54,7 @@ void CPU::Decode::run() {
     holder->imm.write(imm());
     holder->PC_guess.write(PC_guess());
 }
-void CPU::Decode::DCnop() {
+void Decode::DCnop() {
     rd_addr = rs1_addr = rs2_addr = NOT_A_REG_ADDR;
     imm = 0;
     op = OP_ALU_nop;

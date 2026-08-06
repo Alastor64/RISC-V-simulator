@@ -1,7 +1,7 @@
 #include "CPU.hpp"
 #include "MyConstAndTypedef.hpp"
 #include "Tempor.hpp"
-void CPU::ROB::commit() {
+void ROB::commit() {
     cw HD = hd.getv();
     if (HD == tl.getv() || !readyRead.read(HD)) {
         return;

@@ -1,9 +1,9 @@
 #include "CPU.hpp"
 #include "MyConstAndTypedef.hpp"
 #include "Tempor.hpp"
-CPU::Fetch::Fetch(CPU *_) : Module(_) {}
-void CPU::Fetch::update() { ins.update(); }
-void CPU::Fetch::run() {
+Fetch::Fetch(CPU *_) : Module(_) {}
+void Fetch::update() { ins.update(); }
+void Fetch::run() {
     const word CLR = holder->CLR.getv();
     const word blockROB = holder->blockROB.getv();
     const word blockLSQ = holder->blockLSQ.getv();

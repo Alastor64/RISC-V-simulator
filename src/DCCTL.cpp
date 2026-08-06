@@ -1,6 +1,6 @@
-#include "CPU.hpp"
+#include "Decode.hpp"
 #include "MyConstAndTypedef.hpp"
-void CPU::Decode::DCCTL() {
+void Decode::DCCTL() {
     if (opcode() == 0x67) {
         op = OP_CTL_jalr;
         rd_addr = _rd_addr();

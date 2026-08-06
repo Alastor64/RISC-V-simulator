@@ -5,7 +5,7 @@ CPU::CPU()
     : regWrite(reg, MAX_REG_NUM, 1), regRead(reg, MAX_REG_NUM), fetch(this),
       reseter(this), BP(this), decode(this), issue(this), rat(this),
       rob(this) {};
-CPU::Module::Module(CPU *_holder) : holder(_holder) {}
+Module::Module(CPU *_holder) : holder(_holder) {}
 
 void CPU::update() {
     // port and tempor update must be former than reg

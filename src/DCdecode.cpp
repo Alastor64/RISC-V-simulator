@@ -1,5 +1,5 @@
-#include "CPU.hpp"
-void CPU::Decode::DCdecode() {
+#include "Decode.hpp"
+void Decode::DCdecode() {
     cw L0 = tmp() & getLF1(7);
     cw L1 = tmp() >> 7 & getLF1(5);
     cw L2 = tmp() >> 12 & getLF1(3);

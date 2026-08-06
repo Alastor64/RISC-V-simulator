@@ -1,5 +1,5 @@
-#include "CPU.hpp"
-void CPU::Decode::DCALU() {
+#include "Decode.hpp"
+void Decode::DCALU() {
     if (opcode() == 0x33) {
         imm = 0;
     } else {
