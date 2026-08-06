@@ -9,11 +9,11 @@ ROB::ROB(CPU *_)
       addrWrite(addr, ROB_SIZE, MAX_ROB_WRITE_COUNT),
       tagWrite(tag, ROB_SIZE, MAX_ROB_WRITE_COUNT),
       readyWrite(ready, ROB_SIZE, MAX_ROB_WRITE_COUNT) {}
-void ROB::push(cw &index, cw &_op, cw &_addr, cw &_val, cw &_tag) {
+void ROB::push(cw &index, cw &_op, cw &_addr, cw &_tag) {
     tagWrite.write(index, _tag);
     opWrite.write(index, _op);
     addrWrite.write(index, _addr);
-    valWrite.write(index, _val);
+    valWrite.write(index, 0);
     readyWrite.write(index, 0);
 }
 void ROB::update() {

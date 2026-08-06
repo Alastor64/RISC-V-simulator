@@ -15,6 +15,7 @@ void CPU::update() {
     BP.update();
     rat.update();
     rob.update();
+    issue.update();
 
     regWrite.update();
     regRead.update();
@@ -67,6 +68,7 @@ void CPU::run() {
         decode.run();
         rat.run();
         rob.run();
+        issue.run();
 
         update();
         if (terminate.getv() == TERMINATE)

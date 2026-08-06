@@ -34,7 +34,7 @@ class ROB : public Module {
     Register hd, tl;
     Register gene; //[0,3]
     ROB(CPU *_);
-    void push(cw &index, cw &_op, cw &_addr, cw &_val, cw &_tag);
+    void push(cw &index, cw &_op, cw &_addr, cw &_tag);
     void run();
     void update();
 };

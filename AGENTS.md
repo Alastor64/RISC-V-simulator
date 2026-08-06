@@ -8,3 +8,4 @@ ai的回答应尽可能简洁
 design_old_easy_unfinished.md 与 design_old.md 属于过时的设计，务必忽略它们
 当你静态检查时，要注意每周期所有模块、port、tempor、register都要update，且port、tempor要在register之前update
 注意到port、tempor、register在一周期内有使用次数限制，你要特别关注
+我们只在取指时考虑阻塞，所以ROB、LSQ、RS需留足量空间保证在途指令最坏情况下也不会爆炸

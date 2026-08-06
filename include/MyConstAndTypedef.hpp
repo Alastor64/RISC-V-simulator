@@ -27,8 +27,9 @@ constexpr bool inqueue(cw &x, cw &hd, cw &tl) {
 constexpr word make_ROB_tag(cw &index, cw &gene) {
     return index | gene << ROB_SIZE_WIDTH | 1 << (2 + ROB_SIZE_WIDTH);
 }
-constexpr word make_ROB_tag(cw &index, cw &gene, cw &hd, cw &tl) {
-    if (index >= hd)
+constexpr word make_ROB_tag(cw &index, cw &gene,
+                            cw &tl) { // x must be out of queue
+    if (index >= tl)
         return make_ROB_tag(index, gene);
     else
         return make_ROB_tag(index, (gene + 1) & 3);
@@ -68,4 +69,8 @@ enum OP {
     OP_ROB_CTL,
     OP_ROB_MEM,
     OP_ROB_TMP,
+    OP_load_signed_bit,
+    OP_load_signed_half,
+    OP_load_link_bit,
+    OP_load_link_half,
 };
