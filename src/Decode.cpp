@@ -40,7 +40,7 @@ void CPU::Decode::run() {
     PC_guess = ins_PC_next();
     DCdecode();
     if (tmp() == 0x0ff00513) {
-        op = OP_ROB_tmn;
+        op = OP_ROB_TMN;
         rd_addr = rs1_addr = rs2_addr = NOT_A_REG_ADDR;
         imm = 0;
     } else {

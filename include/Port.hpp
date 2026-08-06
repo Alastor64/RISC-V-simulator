@@ -33,3 +33,13 @@ class PortRead {
     word read(cw &index) const;
     void update();
 };
+class PortROBtl {
+    Register *const tl;
+    Register *const gene;
+    word count;
+
+  public:
+    PortROBtl(Register *_tl, Register *_gene);
+    void add(cw &x);
+    void update();
+};

@@ -58,3 +58,21 @@ word PortRead::read(cw &index) const {
     }
 }
 void PortRead::update() {}
+
+PortROBtl::PortROBtl(Register *_tl, Register *_gene) : tl(_tl), gene(_gene) {
+    count = 0;
+}
+void PortROBtl::add(cw &x) {
+    if (count) {
+        throw "too many add in Port ROB";
+    }
+    count++;
+    cw tl_nxt = tl->getv() + x;
+    if (tl_nxt >= ROB_SIZE) {
+        tl->write(tl_nxt & getLF1(ROB_SIZE_WIDTH));
+        gene->write((gene->getv() + 1) & 3);
+    } else {
+        tl->write(tl_nxt);
+    }
+}
+void PortROBtl::update() { count = 0; }

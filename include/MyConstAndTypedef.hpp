@@ -3,9 +3,11 @@ typedef unsigned char byte;
 typedef unsigned int word;
 typedef const word cw;
 // #define DEBUG
+constexpr word BLOCK_TURN = 4;
 constexpr word MAX_ROB_PUSH = 8;
+constexpr word MAX_ROB_WRITE_COUNT = MAX_ROB_PUSH + 1;
 constexpr word ROB_SIZE_WIDTH = 8;
-constexpr word ROB_SIZE = 1 << ROB_SIZE_WIDTH; //>8*3+1
+constexpr word ROB_SIZE = 1 << ROB_SIZE_WIDTH; //> ROB_SIZE_WIDTH*BLOCK_TURN+1
 constexpr word FULL1 = -1;
 constexpr int MAX_REG_NUM = 1 << 5;
 constexpr word CLEAR_FLAG = 1;
@@ -14,6 +16,22 @@ constexpr word NOT_A_REG_ADDR = MAX_REG_NUM;
 consteval word getLF1(const int len) { return FULL1 >> (32 - len); }
 constexpr byte CHAR_to_HEX(char c) {
     return (c <= '9' ? c - '0' : c - 'A' + 10);
+}
+constexpr bool inqueue(cw &x, cw &hd, cw &tl) {
+    if (hd <= tl) {
+        return x >= hd && x < tl;
+    } else {
+        return x >= hd || x < tl;
+    }
+}
+constexpr word make_ROB_tag(cw &index, cw &gene) {
+    return index | gene << ROB_SIZE_WIDTH | 1 << (2 + ROB_SIZE_WIDTH);
+}
+constexpr word make_ROB_tag(cw &index, cw &gene, cw &hd, cw &tl) {
+    if (index >= hd)
+        return make_ROB_tag(index, gene);
+    else
+        return make_ROB_tag(index, (gene + 1) & 3);
 }
 enum OP {
     OP_ALU_nop = 0,
@@ -45,5 +63,9 @@ enum OP {
     OP_LSQ_sw,
     OP_other_auipc,
     OP_other_lui,
-    OP_ROB_tmn,
+    OP_ROB_TMN,
+    OP_ROB_ALU,
+    OP_ROB_CTL,
+    OP_ROB_MEM,
+    OP_ROB_TMP,
 };

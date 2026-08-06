@@ -14,8 +14,11 @@ void CPU::update() {
     reseter.update();
     BP.update();
     rat.update();
+    rob.update();
+
     regWrite.update();
     regRead.update();
+
     for (int i = 0; i < MAX_REG_NUM; i++) {
         reg[i].update();
     }
@@ -35,6 +38,11 @@ void CPU::update() {
     imm.update();
     PC_guess.update();
     terminate.update();
+    CM_tag.update();
+    CDB_LSQ_tag.update();
+    CDB_RS_tag.update();
+    CDB_LSQ_val.update();
+    CDB_RS_val.update();
 }
 void CPU::init() {
     terminate.write(0);
@@ -58,6 +66,7 @@ void CPU::run() {
         reseter.run();
         decode.run();
         rat.run();
+        rob.run();
 
         update();
         if (terminate.getv() == TERMINATE)

@@ -21,6 +21,9 @@ class CPU {
     Register terminate;
     Register ins, ins_PC, ins_PC_next;
     Register op, rd_addr, rs1_addr, rs2_addr, imm, PC_guess;
+    Register CM_tag;
+    Register CDB_LSQ_tag, CDB_RS_tag;
+    Register CDB_LSQ_val, CDB_RS_val;
     CPU();
     void init();
     void run();
@@ -124,20 +127,31 @@ class CPU {
 #else
       private:
 #endif
-        Register op[ROB_SIZE_WIDTH];
-        Register addr[ROB_SIZE_WIDTH];
-        Register val[ROB_SIZE_WIDTH];
-        Register tag[ROB_SIZE_WIDTH];
-        Register ready[ROB_SIZE_WIDTH];
-        word pushCount;
-        cw maxPushCount;
-        Register hd, tl;
+        Register op[ROB_SIZE];
+        Register addr[ROB_SIZE];
+        Register val[ROB_SIZE];
+        Register tag[ROB_SIZE];
+        Register ready[ROB_SIZE];
+        void commit();
+        void readCDB();
+        FlexTempor ifMEM, ifPop;
 
       public:
+        PortROBtl tlAdd;
+        PortRead opRead;
+        PortRead addrRead;
         PortRead tagRead;
         PortRead valRead;
+        PortRead readyRead;
+        PortWrite opWrite;
+        PortWrite addrWrite;
+        PortWrite valWrite;
+        PortWrite tagWrite;
+        PortWrite readyWrite;
+        Register hd, tl;
+        Register gene; //[0,3]
         ROB(CPU *_);
-        void push(cw &, cw &, cw &, cw &, cw &);
+        void push(cw &index, cw &_op, cw &_addr, cw &_val, cw &_tag);
         void run();
         void update();
     } rob;
