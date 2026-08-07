@@ -69,7 +69,7 @@ void CPU::init() {
 }
 void CPU::run() {
     long long tick = 0;
-    long long maxtick = 1e7;
+    long long maxtick = 1e15;
     mem.loadInstruction();
     init();
     while (tick < maxtick) {
