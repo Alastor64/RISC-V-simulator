@@ -7,6 +7,7 @@
 #include "Port.hpp"
 #include "RAT.hpp"
 #include "ROB.hpp"
+#include "RS.hpp"
 #include "Reseter.hpp"
 class CPU {
 #ifdef DEBUG
@@ -44,4 +45,5 @@ class CPU {
     Issue issue;
     RAT rat;
     ROB rob;
+    RS rs;
 };

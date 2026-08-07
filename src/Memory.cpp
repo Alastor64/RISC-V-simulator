@@ -31,8 +31,8 @@ void Memory::write_byte(const word &w, const word &addr) {
 //     val[addr + 3] = byte(w >> 24 & getLF1(8));
 // }
 word Memory::get_word(const word &addr) {
-    return (val[addr] | (val[addr + 1] << 8) | (val[addr + 2] << 16) |
-            (val[addr + 3] << 24));
+    return (val[addr] | (word(val[addr + 1]) << 8) |
+            (word(val[addr + 2]) << 16) | (word(val[addr + 3]) << 24));
 }
 word Memory::get_byte(const word &addr) { return val[addr]; }
 // word Memory::get_signed_byte(const word &addr) {

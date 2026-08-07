@@ -3,6 +3,10 @@ typedef unsigned char byte;
 typedef unsigned int word;
 typedef const word cw;
 // #define DEBUG
+constexpr word RS_SIZE_WIDTH = 8;
+constexpr word RS_SIZE = 1 << RS_SIZE_WIDTH;
+constexpr word MAX_RS_PUSH = 8;
+constexpr word MAX_RS_WRITE_COUNT = MAX_RS_PUSH;
 constexpr word BLOCK_TURN = 4;
 constexpr word MAX_ROB_PUSH = 8;
 constexpr word MAX_ROB_WRITE_COUNT = MAX_ROB_PUSH + 1;

@@ -2,6 +2,7 @@
 class CPU;
 class Module;
 class Fetch;
+class RS;
 class Module {
 #ifdef DEBUG
   public:

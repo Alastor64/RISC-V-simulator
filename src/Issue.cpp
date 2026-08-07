@@ -1,3 +1,4 @@
+#include "Issue.hpp"
 #include "CPU.hpp"
 #include "MyConstAndTypedef.hpp"
 #include "Tempor.hpp"
@@ -12,11 +13,8 @@ void Issue::run() {
     cw tl = holder->rob.tl.getv();
     cw gene = holder->rob.gene.getv();
     cw PC_guess = holder->PC_guess.getv();
-    for (word i = 0; i < MAX_ROB_PUSH; i++) {
-        cw index = ((tl + i) & getLF1(ROB_SIZE_WIDTH));
-        ptl[i] = index;
-        tag[i] = make_ROB_tag(index, gene, tl);
-    }
+    makeindexs();
+    checkROBtag();
     if (op == OP_ALU_nop || CLR == CLEAR_FLAG) {
         return;
     } else {
@@ -33,9 +31,23 @@ void Issue::run() {
         case OP_ALU_sltu:
         case OP_other_auipc:
         case OP_other_lui:
-            holder->rob.push(tl, OP_ROB_ALU, rd_addr, tag[0]());
+            holder->rob.push(tl, OP_ROB_ALU, rd_addr, ROBtag[0]());
             holder->rob.tlAdd.add(1);
-            holder->rat.RATWrite.write(rd_addr, tag[0]());
+            holder->rat.RATWrite.write(rd_addr, ROBtag[0]());
+            if (op == OP_other_auipc) {
+                holder->rs.push(RSindex[0](), OP_ALU_add, ROBtag[0](), rs1_addr,
+                                imm, 0, 0, 0);
+            } else if (op == OP_other_lui) {
+                holder->rs.push(RSindex[0](), OP_ALU_add, ROBtag[0](), 0, imm,
+                                0, 0, 0);
+            } else {
+                if (rs2_addr == NOT_A_REG_ADDR)
+                    holder->rs.push(RSindex[0](), op, ROBtag[0](), rval[1](),
+                                    imm, rtag[1](), 0, 0);
+                else
+                    holder->rs.push(RSindex[0](), op, ROBtag[0](), rval[1](),
+                                    rval[2](), rtag[1](), rtag[2](), 0);
+            }
             break;
         case OP_CTL_beq:
         case OP_CTL_bge:
@@ -43,14 +55,15 @@ void Issue::run() {
         case OP_CTL_blt:
         case OP_CTL_bltu:
         case OP_CTL_bne:
-            holder->rob.push(tl, OP_ROB_CTL, PC_guess, tag[0]());
-            holder->rob.tlAdd.add(1);
+            holder->rob.push(tl, OP_ROB_TMP, 0, ROBtag[0]());
+            holder->rob.push(ROBindex[1](), OP_ROB_CTL, PC_guess, ROBtag[1]());
+            holder->rob.tlAdd.add(2);
             break;
         case OP_CTL_jal:
         case OP_CTL_jalr:
-            holder->rob.push(tl, OP_ROB_ALU, rd_addr, tag[0]());
-            holder->rat.RATWrite.write(rd_addr, tag[0]());
-            holder->rob.push(ptl[1](), OP_ROB_CTL, PC_guess, tag[1]());
+            holder->rob.push(tl, OP_ROB_ALU, rd_addr, ROBtag[0]());
+            holder->rat.RATWrite.write(rd_addr, ROBtag[0]());
+            holder->rob.push(ROBindex[1](), OP_ROB_CTL, PC_guess, ROBtag[1]());
             holder->rob.tlAdd.add(2);
             break;
         case OP_LSQ_lb:
@@ -64,7 +77,7 @@ void Issue::run() {
             IssueLSQ();
             break;
         case OP_ROB_TMN:
-            holder->rob.push(tl, OP_ROB_TMN, 0, tag[0]());
+            holder->rob.push(tl, OP_ROB_TMN, 0, ROBtag[0]());
             holder->rob.tlAdd.add(1);
             break;
         default:
@@ -73,8 +86,59 @@ void Issue::run() {
     }
 }
 void Issue::update() {
+    for (word i = 0; i < 3; i++) {
+        rval[i].update();
+        rtag[i].update();
+    }
     for (word i = 0; i < MAX_ROB_PUSH; i++) {
-        tag[i].update();
-        ptl[i].update();
+        ROBtag[i].update();
+        ROBindex[i].update();
+        RSindex[i].update();
+    }
+}
+void Issue::makeindexs() {
+    cw tl = holder->rob.tl.getv();
+    cw gene = holder->rob.gene.getv();
+    for (word i = 0; i < MAX_ROB_PUSH; i++) {
+        cw index = ((tl + i) & getLF1(ROB_SIZE_WIDTH));
+        ROBindex[i] = index;
+        ROBtag[i] = make_ROB_tag(index, gene, tl);
+    }
+    for (int i = 0; i < MAX_RS_PUSH; i++) {
+        for (int j = 0; j < RS_SIZE; j++) {
+            if (holder->rs.opRead.read(j))
+                continue;
+            if (i == 0 || j > RSindex[i - 1]()) {
+                RSindex[i] = j;
+                break;
+            }
+        }
+    }
+}
+void Issue::checkROBtag() {
+    cw addr[] = {holder->rd_addr.getv(), holder->rs1_addr.getv(),
+                 holder->rs2_addr.getv()};
+    for (int i = 0; i < 3; i++) {
+        if (addr[i] == 0 || addr[i] >= MAX_REG_NUM) {
+            rval[i] = 0;
+            rtag[i] = 0;
+        }
+        cw t = holder->rat.RATRead.read(addr[i]);
+        if (t == 0) {
+            rval[i] = holder->regRead.read(addr[i]);
+            rtag[i] = 0;
+        } else if (t == holder->CDB_LSQ_tag.getv()) {
+            rval[i] = holder->CDB_LSQ_val.getv();
+            rtag[i] = 0;
+        } else if (t == holder->CDB_RS_tag.getv()) {
+            rval[i] = holder->CDB_RS_val.getv();
+            rtag[i] = 0;
+        } else if (holder->rob.readyRead.read(t & getLF1(ROB_SIZE_WIDTH))) {
+            rval[i] = holder->rob.valRead.read(t & getLF1(ROB_SIZE_WIDTH));
+            rtag[i] = 0;
+        } else {
+            rval[i] = 0;
+            rtag[i] = t;
+        }
     }
 }

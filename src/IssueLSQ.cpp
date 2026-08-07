@@ -35,11 +35,11 @@ void Issue::IssueLSQ() {
             throw "unexpected error in issue LSQ load";
         }
         for (word i = 0; i < pushNum() - 1; i++) {
-            holder->rob.push(ptl[i](), OP_ROB_TMP, 0, tag[i]());
+            holder->rob.push(ROBindex[i](), OP_ROB_TMP, 0, ROBtag[i]());
         }
-        holder->rob.push(ptl[pushNum() - 1](), OP_ROB_ALU, rd_addr,
-                         tag[pushNum() - 1]());
-        holder->rat.RATWrite.write(rd_addr, tag[pushNum() - 1]());
+        holder->rob.push(ROBindex[pushNum() - 1](), OP_ROB_ALU, rd_addr,
+                         ROBtag[pushNum() - 1]());
+        holder->rat.RATWrite.write(rd_addr, ROBtag[pushNum() - 1]());
         break;
     case OP_LSQ_sb:
     case OP_LSQ_sh:
@@ -57,9 +57,9 @@ void Issue::IssueLSQ() {
         default:
             throw "unexpected error in issue LSQ store";
         }
-        holder->rob.push(ptl[0](), OP_ROB_TMP, 0, tag[0]());
+        holder->rob.push(ROBindex[0](), OP_ROB_TMP, 0, ROBtag[0]());
         for (word i = 1; i < pushNum(); i++) {
-            holder->rob.push(ptl[i](), OP_ROB_MEM, 0, tag[i]());
+            holder->rob.push(ROBindex[i](), OP_ROB_MEM, 0, ROBtag[i]());
         }
         break;
     default:

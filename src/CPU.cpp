@@ -3,8 +3,8 @@
 #include <cstdio>
 CPU::CPU()
     : regWrite(reg, MAX_REG_NUM, 2), regRead(reg, MAX_REG_NUM), fetch(this),
-      reseter(this), BP(this), decode(this), issue(this), rat(this),
-      rob(this) {};
+      reseter(this), BP(this), decode(this), issue(this), rat(this), rob(this),
+      rs(this) {};
 Module::Module(CPU *_holder) : holder(_holder) {}
 
 void CPU::update() {
@@ -16,6 +16,7 @@ void CPU::update() {
     rat.update();
     rob.update();
     issue.update();
+    rs.update();
 
     regWrite.update();
     regRead.update();
@@ -69,6 +70,7 @@ void CPU::run() {
         rat.run();
         rob.run();
         issue.run();
+        rs.run();
 
         update();
         if (terminate.getv() == TERMINATE)
