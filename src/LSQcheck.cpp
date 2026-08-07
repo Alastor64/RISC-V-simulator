@@ -11,10 +11,10 @@ void LSQ::checkstore() {
             continue;
         if (count[i].getv())
             continue;
-        if (offet[i].getv() == -1)
+        if (offset[i].getv() == -1)
             continue;
         if (!CDBflag()) {
-            offet->write(-1);
+            offset[i].write(-1);
             CDBflag = 1;
             holder->CDB_LSQ_tag.write(target[i].getv());
             holder->CDB_LSQ_val.write(1);
@@ -27,6 +27,8 @@ void LSQ::checkload() {
         cw t = target[i].getv();
         cw a = addr[i].getv();
         if (o != OP_LSQ_load)
+            continue;
+        if (qa[i].getv())
             continue;
         if (count[i].getv())
             continue;
@@ -46,9 +48,10 @@ void LSQ::checkload() {
         for (word j = 0; j < LSQ_SIZE; j++) {
             cw iflegal = (op[j].getv() == OP_LSQ_store && addr[j].getv() == a &&
                           ROByounger(target[j].getv(), t));
-            cw better = (frontROB[i][j]() == 0 &&
-                         ROByounger(frontROB[i][j](), target[j].getv()));
-            if (iflegal && better) {
+            cw better =
+                iflegal && (frontROB[i][j]() == 0 ||
+                            ROByounger(frontROB[i][j](), target[j].getv()));
+            if (better) {
                 frontROB[i][j + 1] = target[j].getv();
                 frontVal[i][j + 1] = val[j].getv();
                 ifready[i][j + 1] = !bool(qv[j].getv());

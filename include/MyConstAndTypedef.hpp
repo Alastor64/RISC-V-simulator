@@ -53,7 +53,7 @@ constexpr bool ROByounger(cw &a, cw &b) {
     cw gb = b >> ROB_SIZE_WIDTH & getLF1(2);
     cw ia = a & getLF1(ROB_SIZE_WIDTH);
     cw ib = b & getLF1(ROB_SIZE_WIDTH);
-    if (a == b)
+    if (ga == gb)
         return ia < ib;
     else {
         if ((ga + 1 & 3) == gb)

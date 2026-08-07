@@ -10,7 +10,7 @@ LSQ::LSQ(CPU *_)
       qaWrite(qa, LSQ_SIZE, MAX_LSQ_WRITE_COUNT),
       qvWrite(qv, LSQ_SIZE, MAX_LSQ_WRITE_COUNT),
       targetWrite(target, LSQ_SIZE, MAX_LSQ_WRITE_COUNT),
-      offsetWrite(offet, LSQ_SIZE, MAX_LSQ_WRITE_COUNT),
+      offsetWrite(offset, LSQ_SIZE, MAX_LSQ_WRITE_COUNT),
       countWrite(count, LSQ_SIZE, MAX_LSQ_WRITE_COUNT) {}
 void LSQ::update() {
     emptySize.update();
@@ -39,7 +39,7 @@ void LSQ::update() {
         qa[i].update();
         qv[i].update();
         target[i].update();
-        offet[i].update();
+        offset[i].update();
         count[i].update();
     }
 }
@@ -50,7 +50,7 @@ void LSQ::pop(cw &i) {
     qa[i].write(0);
     qv[i].write(0);
     target[i].write(0);
-    offet[i].write(0);
+    offset[i].write(0);
     count[i].write(0);
 }
 void LSQ::run() {
@@ -89,8 +89,8 @@ void LSQ::init() {
         qv[i].update();
         target[i].write(0);
         target[i].update();
-        offet[i].write(0);
-        offet[i].update();
+        offset[i].write(0);
+        offset[i].update();
         count[i].write(0);
         count[i].update();
     }
@@ -100,14 +100,14 @@ void LSQ::push(cw &index, cw &_op, cw &_val, cw &_qa, cw &_qv, cw &_target,
     if (index >= LSQ_SIZE) {
         throw "you may not write inexist LSQ!";
     }
-    op[index].write(_op);
-    val[index].write(_val);
-    addr[index].write(0);
-    qa[index].write(_qa);
-    qv[index].write(_qv);
-    target[index].write(_target);
-    offet[index].write(_offset);
-    count[index].write(0);
+    opWrite.write(index, _op);
+    valWrite.write(index, _val);
+    addrWrite.write(index, 0);
+    qaWrite.write(index, _qa);
+    qvWrite.write(index, _qv);
+    targetWrite.write(index, _target);
+    offsetWrite.write(index, _offset);
+    countWrite.write(index, 0);
 }
 void LSQ::countEmpty() {
     preEmpty[0] = 0;

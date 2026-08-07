@@ -11,11 +11,11 @@ void LSQ::readCDB_CM() {
         for (word t = 0; t < 2; t++) {
             if (qa[i].getv() && qa[i].getv() == ct[t]) {
                 qa[i].write(0);
-                addr[i].write(cv[t] + offet[i].getv());
+                addr[i].write(cv[t] + offset[i].getv());
             }
             if (qv[i].getv() && qv[i].getv() == ct[t]) {
                 qv[i].write(0);
-                val[i].write(cv[t] >> (8 * offet[i].getv()) & getLF1(8));
+                val[i].write(cv[t] >> (8 * offset[i].getv()) & getLF1(8));
             }
         }
         if (op[i].getv() == OP_LSQ_store &&

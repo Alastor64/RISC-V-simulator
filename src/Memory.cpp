@@ -1,7 +1,7 @@
 #include "Memory.hpp"
 #include "MyConstAndTypedef.hpp"
 #include <iostream>
-Register::Register() { written = 0; }
+Register::Register() { val = tmp = written = 0; }
 void Register::update() {
     if (written) {
         val = tmp;
