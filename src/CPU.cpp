@@ -1,12 +1,19 @@
 #include "CPU.hpp"
 #include "MyConstAndTypedef.hpp"
 #include <cstdio>
+#ifdef DEBUG
+void CPU::print() {
+    printf("PC=%d:\n", PC.getv());
+    for (int i = 0; i < MAX_REG_NUM; i++) {
+        printf("reg[%d]:val=%d  tag=%d\n", i, reg[i].getv(), rat.tag[i].getv());
+    }
+}
+#endif
 CPU::CPU()
     : regWrite(reg, MAX_REG_NUM, 2), regRead(reg, MAX_REG_NUM), fetch(this),
       reseter(this), BP(this), decode(this), issue(this), rat(this), rob(this),
       rs(this), lsq(this) {};
 Module::Module(CPU *_holder) : holder(_holder) {}
-
 void CPU::update() {
     // port and tempor update must be former than reg
     fetch.update();
@@ -76,6 +83,11 @@ void CPU::run() {
         lsq.run();
 
         update();
+
+#ifdef DEBUG
+        print();
+#endif
+
         if (terminate.getv() == TERMINATE)
             break;
     }

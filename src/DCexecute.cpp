@@ -21,9 +21,10 @@ void Decode::DCexecute() {
     case 0x37:
         DCother();
         break;
-    case 0x73:
-        throw "abandoned instruction!";
+    // case 0x73:
+    //     throw "abandoned instruction!";
     default:
-        throw "invalid instruction!";
+        DCnop();
+        break;
     }
 }

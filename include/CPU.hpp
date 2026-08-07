@@ -13,6 +13,7 @@
 class CPU {
 #ifdef DEBUG
   public:
+    void print();
 #else
   private:
 #endif
