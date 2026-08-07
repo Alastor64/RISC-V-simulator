@@ -48,6 +48,21 @@ constexpr word make_ROB_tag(cw &index, cw &gene,
     else
         return make_ROB_tag(index, (gene + 1) & 3);
 }
+constexpr bool ROByounger(cw &a, cw &b) {
+    cw ga = a >> ROB_SIZE_WIDTH & getLF1(2);
+    cw gb = b >> ROB_SIZE_WIDTH & getLF1(2);
+    cw ia = a & getLF1(ROB_SIZE_WIDTH);
+    cw ib = b & getLF1(ROB_SIZE_WIDTH);
+    if (a == b)
+        return ia < ib;
+    else {
+        if ((ga + 1 & 3) == gb)
+            return 1;
+        if ((gb + 1 & 3) == ga)
+            return 0;
+        throw "unexpected error in compare ROB";
+    }
+}
 enum OP {
     OP_ALU_nop = 0,
     OP_ALU_add,

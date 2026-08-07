@@ -16,6 +16,9 @@ class LSQ : public Module {
     FlexTempor CDBflag;
     FlexTempor preEmpty[LSQ_SIZE];
     FlexTempor emptySize;
+    FlexTempor frontROB[LSQ_SIZE][LSQ_SIZE + 1];
+    FlexTempor ifready[LSQ_SIZE][LSQ_SIZE + 1];
+    FlexTempor frontVal[LSQ_SIZE][LSQ_SIZE + 1];
 
     void countEmpty();
     void readCDB_CM();

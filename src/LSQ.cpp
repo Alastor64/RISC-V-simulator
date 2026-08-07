@@ -16,6 +16,11 @@ void LSQ::update() {
     emptySize.update();
     for (word i = 0; i < LSQ_SIZE; i++) {
         preEmpty[i].update();
+        for (word j = 0; j < LSQ_SIZE + 1; j++) {
+            frontROB[i][j].update();
+            frontVal[i][j].update();
+            ifready[i][j].update();
+        }
     }
     CDBflag.update();
     opRead.update();
@@ -62,6 +67,7 @@ void LSQ::run() {
         readCDB_CM();
         counting();
         checkstore();
+        checkload();
         holder->blockLSQ.write(emptySize() <= MAX_LSQ_PUSH * BLOCK_TURN);
     }
     if (!CDBflag()) {
