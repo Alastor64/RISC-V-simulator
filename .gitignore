@@ -13,3 +13,4 @@ log.txt
 *.dump
 *.c
 README.md
+*.out
