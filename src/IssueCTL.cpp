@@ -46,6 +46,7 @@ void Issue::IssueCTL() {
             break;
         case OP_CTL_bltu:
             o = OP_b_bltu;
+            break;
         case OP_CTL_bne:
             o = OP_b_bne;
             break;

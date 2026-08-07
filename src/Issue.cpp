@@ -12,6 +12,7 @@ void Issue::update() {
         ROBtag[i].update();
         ROBindex[i].update();
         RSindex[i].update();
+        LSQindex[i].update();
     }
 }
 void Issue::run() {

@@ -17,6 +17,7 @@ void CPU::update() {
     rob.update();
     issue.update();
     rs.update();
+    lsq.update();
 
     regWrite.update();
     regRead.update();
@@ -72,6 +73,7 @@ void CPU::run() {
         rob.run();
         issue.run();
         rs.run();
+        lsq.run();
 
         update();
         if (terminate.getv() == TERMINATE)

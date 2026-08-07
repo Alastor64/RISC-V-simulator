@@ -13,6 +13,7 @@ LSQ::LSQ(CPU *_)
       offsetWrite(offet, LSQ_SIZE, MAX_LSQ_WRITE_COUNT),
       countWrite(count, LSQ_SIZE, MAX_LSQ_WRITE_COUNT) {}
 void LSQ::update() {
+    opRead.update();
     opWrite.update();
     addrWrite.update();
     valWrite.update();

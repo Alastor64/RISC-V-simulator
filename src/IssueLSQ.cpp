@@ -37,13 +37,22 @@ void Issue::IssueLSQ() {
             break;
         case OP_LSQ_lh:
             pushNum = 1 + 2 + 1;
-            holder->rs.push(RSindex[1](), OP_load_link_bit_u, ROBtag[3](), 0, 0,
+            holder->rs.push(RSindex[1](), OP_load_link_bit, ROBtag[3](), 0, 0,
                             ROBtag[1](), ROBtag[2](), 0);
+            holder->lsq.push(LSQindex[0](), OP_LSQ_load, 0, ROBtag[0](), 0,
+                             ROBtag[1](), 0);
+            holder->lsq.push(LSQindex[1](), OP_LSQ_load, 0, ROBtag[0](), 0,
+                             ROBtag[2](), 1);
             break;
         case OP_LSQ_lhu:
             pushNum = 1 + 2 + 1;
-            holder->rs.push(RSindex[1](), OP_load_link_bit, ROBtag[3](), 0, 0,
+            holder->rs.push(RSindex[1](), OP_load_link_bit_u, ROBtag[3](), 0, 0,
                             ROBtag[1](), ROBtag[2](), 0);
+            holder->lsq.push(LSQindex[0](), OP_LSQ_load, 0, ROBtag[0](), 0,
+                             ROBtag[1](), 0);
+            holder->lsq.push(LSQindex[1](), OP_LSQ_load, 0, ROBtag[0](), 0,
+                             ROBtag[2](), 1);
+
             break;
         case OP_LSQ_lw:
             pushNum = 1 + 4 + 2 + 1;
@@ -53,6 +62,15 @@ void Issue::IssueLSQ() {
                             ROBtag[3](), ROBtag[4](), 0);
             holder->rs.push(RSindex[3](), OP_load_link_half, ROBtag[7](), 0, 0,
                             ROBtag[5](), ROBtag[6](), 0);
+            holder->lsq.push(LSQindex[0](), OP_LSQ_load, 0, ROBtag[0](), 0,
+                             ROBtag[1](), 0);
+            holder->lsq.push(LSQindex[1](), OP_LSQ_load, 0, ROBtag[0](), 0,
+                             ROBtag[2](), 1);
+            holder->lsq.push(LSQindex[2](), OP_LSQ_load, 0, ROBtag[0](), 0,
+                             ROBtag[3](), 2);
+            holder->lsq.push(LSQindex[3](), OP_LSQ_load, 0, ROBtag[0](), 0,
+                             ROBtag[4](), 3);
+
             break;
         default:
             throw "unexpected error in issue LSQ load";
@@ -70,12 +88,26 @@ void Issue::IssueLSQ() {
         switch (op) {
         case OP_LSQ_sb:
             pushNum = 1 + 1;
+            holder->lsq.push(LSQindex[0](), OP_LSQ_store, rval[0](),
+                             ROBtag[0](), rtag[0](), ROBtag[1](), 0);
             break;
         case OP_LSQ_sh:
             pushNum = 1 + 2;
+            holder->lsq.push(LSQindex[0](), OP_LSQ_store, rval[0](),
+                             ROBtag[0](), rtag[0](), ROBtag[1](), 0);
+            holder->lsq.push(LSQindex[1](), OP_LSQ_store, rval[0](),
+                             ROBtag[0](), rtag[0](), ROBtag[2](), 1);
             break;
         case OP_LSQ_sw:
             pushNum = 1 + 4;
+            holder->lsq.push(LSQindex[0](), OP_LSQ_store, rval[0](),
+                             ROBtag[0](), rtag[0](), ROBtag[1](), 0);
+            holder->lsq.push(LSQindex[1](), OP_LSQ_store, rval[0](),
+                             ROBtag[0](), rtag[0](), ROBtag[2](), 1);
+            holder->lsq.push(LSQindex[2](), OP_LSQ_store, rval[0](),
+                             ROBtag[0](), rtag[0](), ROBtag[3](), 2);
+            holder->lsq.push(LSQindex[3](), OP_LSQ_store, rval[0](),
+                             ROBtag[0](), rtag[0](), ROBtag[4](), 3);
             break;
         default:
             throw "unexpected error in issue LSQ store";
