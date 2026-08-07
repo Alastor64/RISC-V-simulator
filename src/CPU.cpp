@@ -75,13 +75,13 @@ void CPU::run() {
     while (tick < maxtick) {
         tick++;
 
+        rat.run();
+        rob.run();
+        issue.run();
         fetch.run();
         BP.run();
         reseter.run();
         decode.run();
-        rat.run();
-        rob.run();
-        issue.run();
         rs.run();
         lsq.run();
 
@@ -100,4 +100,5 @@ void CPU::run() {
     } else {
         std::printf("%d\n", (reg[10].getv() & getLF1(8)));
     }
+    // printf("%lld\n",tick);
 }
