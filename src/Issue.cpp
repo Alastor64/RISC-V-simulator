@@ -11,7 +11,11 @@ void Issue::update() {
     for (word i = 0; i < MAX_ROB_PUSH; i++) {
         ROBtag[i].update();
         ROBindex[i].update();
+    }
+    for (word i = 0; i < MAX_RS_PUSH; i++) {
         RSindex[i].update();
+    }
+    for (word i = 0; i < MAX_LSQ_PUSH; i++) {
         LSQindex[i].update();
     }
 }

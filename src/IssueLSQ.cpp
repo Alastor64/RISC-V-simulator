@@ -12,10 +12,10 @@ void Issue::IssueLSQ() {
     FlexTempor pushNum;
     holder->rs.push(RSindex[0](), OP_ALU_add, ROBtag[0](), rval[1](), imm,
                     rtag[1](), 0, 0);
-    cw sv0 = (rval[0]()) & getLF1(8);
-    cw sv1 = (rval[0]() >> 8) & getLF1(8);
-    cw sv2 = (rval[0]() >> 16) & getLF1(8);
-    cw sv3 = (rval[0]() >> 24) & getLF1(8);
+    cw sv0 = (rval[2]()) & getLF1(8);
+    cw sv1 = (rval[2]() >> 8) & getLF1(8);
+    cw sv2 = (rval[2]() >> 16) & getLF1(8);
+    cw sv3 = (rval[2]() >> 24) & getLF1(8);
     switch (op) {
     case OP_LSQ_lbu:
     case OP_LSQ_lb:
@@ -89,25 +89,25 @@ void Issue::IssueLSQ() {
         case OP_LSQ_sb:
             pushNum = 1 + 1;
             holder->lsq.push(LSQindex[0](), OP_LSQ_store, sv0, ROBtag[0](),
-                             rtag[0](), ROBtag[1](), 0);
+                             rtag[2](), ROBtag[1](), 0);
             break;
         case OP_LSQ_sh:
             pushNum = 1 + 2;
             holder->lsq.push(LSQindex[0](), OP_LSQ_store, sv0, ROBtag[0](),
-                             rtag[0](), ROBtag[1](), 0);
+                             rtag[2](), ROBtag[1](), 0);
             holder->lsq.push(LSQindex[1](), OP_LSQ_store, sv1, ROBtag[0](),
-                             rtag[0](), ROBtag[2](), 1);
+                             rtag[2](), ROBtag[2](), 1);
             break;
         case OP_LSQ_sw:
             pushNum = 1 + 4;
             holder->lsq.push(LSQindex[0](), OP_LSQ_store, sv0, ROBtag[0](),
-                             rtag[0](), ROBtag[1](), 0);
+                             rtag[2](), ROBtag[1](), 0);
             holder->lsq.push(LSQindex[1](), OP_LSQ_store, sv1, ROBtag[0](),
-                             rtag[0](), ROBtag[2](), 1);
+                             rtag[2](), ROBtag[2](), 1);
             holder->lsq.push(LSQindex[2](), OP_LSQ_store, sv2, ROBtag[0](),
-                             rtag[0](), ROBtag[3](), 2);
+                             rtag[2](), ROBtag[3](), 2);
             holder->lsq.push(LSQindex[3](), OP_LSQ_store, sv3, ROBtag[0](),
-                             rtag[0](), ROBtag[4](), 3);
+                             rtag[2](), ROBtag[4](), 3);
             break;
         default:
             throw "unexpected error in issue LSQ store";

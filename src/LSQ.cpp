@@ -13,6 +13,11 @@ LSQ::LSQ(CPU *_)
       offsetWrite(offet, LSQ_SIZE, MAX_LSQ_WRITE_COUNT),
       countWrite(count, LSQ_SIZE, MAX_LSQ_WRITE_COUNT) {}
 void LSQ::update() {
+    emptySize.update();
+    for (word i = 0; i < LSQ_SIZE; i++) {
+        preEmpty[i].update();
+    }
+    CDBflag.update();
     opRead.update();
     opWrite.update();
     addrWrite.update();
@@ -24,9 +29,17 @@ void LSQ::update() {
     countWrite.update();
 }
 void LSQ::run() {
-    holder->blockLSQ.write(0);
-    holder->CDB_LSQ_tag.write(0);
-    holder->CDB_LSQ_val.write(0);
+    cw CLR = holder->CLR.getv();
+    countEmpty();
+    if (CLR == CLEAR_FLAG) {
+        holder->blockLSQ.write(0);
+    } else {
+        holder->blockLSQ.write(emptySize() <= MAX_LSQ_PUSH * BLOCK_TURN);
+    }
+    if (!CDBflag()) {
+        holder->CDB_LSQ_tag.write(0);
+        holder->CDB_LSQ_val.write(0);
+    }
 }
 void LSQ::init() {
     for (word i = 0; i < LSQ_SIZE; i++) {
@@ -61,4 +74,11 @@ void LSQ::push(cw &index, cw &_op, cw &_val, cw &_qa, cw &_qv, cw &_target,
     target[index].write(_target);
     offet[index].write(_offset);
     count[index].write(0);
+}
+void LSQ::countEmpty() {
+    preEmpty[0] = 0;
+    for (word i = 0; i < RS_SIZE - 1; i++) {
+        preEmpty[i + 1] = preEmpty[i]() + (op[i].getv() == 0);
+    }
+    emptySize = preEmpty[RS_SIZE - 1]() + (op[RS_SIZE - 1].getv() == 0);
 }

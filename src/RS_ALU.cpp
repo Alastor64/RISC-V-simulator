@@ -86,6 +86,18 @@ void RS::calc(cw &o, cw &r1, cw &r2, cw &r3) {
     case OP_CTL_jalr:
         result = r1 + r3;
         break;
+    case OP_load_signed_bit:
+        result = int(r1 << 24) >> 24;
+        break;
+    case OP_load_link_bit_u:
+        result = (r1 | r2 << 8) & getLF1(16);
+        break;
+    case OP_load_link_bit:
+        result = int((r1 | r2 << 8) << 16) >> 16;
+        break;
+    case OP_load_link_half:
+        result = r1 | r2 << 16;
+        break;
     default:
         throw "invalid op in RS calc";
     }

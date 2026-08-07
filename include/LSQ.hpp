@@ -3,6 +3,7 @@
 #include "MyClass.hpp"
 #include "MyConstAndTypedef.hpp"
 #include "Port.hpp"
+#include "Tempor.hpp"
 class LSQ : public Module {
 #ifdef DEBUG
   public:
@@ -12,6 +13,11 @@ class LSQ : public Module {
     // offset在数据就绪后被清除
     Register op[LSQ_SIZE], addr[LSQ_SIZE], val[LSQ_SIZE], qa[LSQ_SIZE],
         qv[LSQ_SIZE], target[LSQ_SIZE], offet[LSQ_SIZE], count[LSQ_SIZE];
+    FlexTempor CDBflag;
+    FlexTempor preEmpty[LSQ_SIZE];
+    FlexTempor emptySize;
+
+    void countEmpty();
 
   public:
     PortRead opRead;
