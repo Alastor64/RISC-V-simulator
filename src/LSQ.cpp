@@ -27,6 +27,16 @@ void LSQ::update() {
     targetWrite.update();
     offsetWrite.update();
     countWrite.update();
+    for (word i = 0; i < LSQ_SIZE; i++) {
+        op[i].update();
+        addr[i].update();
+        val[i].update();
+        qa[i].update();
+        qv[i].update();
+        target[i].update();
+        offet[i].update();
+        count[i].update();
+    }
 }
 void LSQ::run() {
     cw CLR = holder->CLR.getv();
@@ -46,6 +56,7 @@ void LSQ::run() {
         }
         holder->blockLSQ.write(0);
     } else {
+        readCDB_CM();
         holder->blockLSQ.write(emptySize() <= MAX_LSQ_PUSH * BLOCK_TURN);
     }
     if (!CDBflag()) {

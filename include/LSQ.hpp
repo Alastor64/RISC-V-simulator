@@ -10,7 +10,7 @@ class LSQ : public Module {
 #else
   private:
 #endif
-    // offset在数据就绪后被清除
+    // offset在数据就绪后就是垃圾值了
     Register op[LSQ_SIZE], addr[LSQ_SIZE], val[LSQ_SIZE], qa[LSQ_SIZE],
         qv[LSQ_SIZE], target[LSQ_SIZE], offet[LSQ_SIZE], count[LSQ_SIZE];
     FlexTempor CDBflag;
@@ -18,6 +18,7 @@ class LSQ : public Module {
     FlexTempor emptySize;
 
     void countEmpty();
+    void readCDB_CM();
 
   public:
     PortRead opRead;
