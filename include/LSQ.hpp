@@ -19,6 +19,9 @@ class LSQ : public Module {
 
     void countEmpty();
     void readCDB_CM();
+    void counting();
+    void checkstore();
+    void checkload();
 
   public:
     PortRead opRead;
@@ -31,6 +34,7 @@ class LSQ : public Module {
     PortWrite offsetWrite;
     PortWrite countWrite;
     void init();
+    void pop(cw &i);
     void push(cw &index, cw &_op, cw &_val, cw &_qa, cw &_qv, cw &_target,
               cw &_offset);
     LSQ(CPU *_);

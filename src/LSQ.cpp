@@ -38,6 +38,16 @@ void LSQ::update() {
         count[i].update();
     }
 }
+void LSQ::pop(cw &i) {
+    op[i].write(0);
+    addr[i].write(0);
+    val[i].write(0);
+    qa[i].write(0);
+    qv[i].write(0);
+    target[i].write(0);
+    offet[i].write(0);
+    count[i].write(0);
+}
 void LSQ::run() {
     cw CLR = holder->CLR.getv();
     countEmpty();
@@ -45,18 +55,13 @@ void LSQ::run() {
         for (word i = 0; i < LSQ_SIZE; i++) {
             if (op[i].getv() == OP_LSQ_store && count[i].getv() > 0)
                 continue;
-            op[i].write(0);
-            addr[i].write(0);
-            val[i].write(0);
-            qa[i].write(0);
-            qv[i].write(0);
-            target[i].write(0);
-            offet[i].write(0);
-            count[i].write(0);
+            pop(i);
         }
         holder->blockLSQ.write(0);
     } else {
         readCDB_CM();
+        counting();
+        checkstore();
         holder->blockLSQ.write(emptySize() <= MAX_LSQ_PUSH * BLOCK_TURN);
     }
     if (!CDBflag()) {

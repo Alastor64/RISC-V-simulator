@@ -3,6 +3,8 @@ typedef unsigned char byte;
 typedef unsigned int word;
 typedef const word cw;
 // #define DEBUG
+constexpr word memtick = 4;
+
 constexpr word BLOCK_TURN = 5;
 
 constexpr word LSQ_SIZE_WIDTH = 8;
