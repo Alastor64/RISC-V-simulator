@@ -56,9 +56,9 @@ void LSQ::checkload() {
                 frontVal[i][j + 1] = val[j].getv();
                 ifready[i][j + 1] = !bool(qv[j].getv());
             } else {
-                frontROB[i][j + 1] = frontROB[i][j];
-                frontVal[i][j + 1] = frontVal[i][j];
-                ifready[i][j + 1] = ifready[i][j];
+                frontROB[i][j + 1] = frontROB[i][j]();
+                frontVal[i][j + 1] = frontVal[i][j]();
+                ifready[i][j + 1] = ifready[i][j]();
             }
         }
         cw fr = frontROB[i][LSQ_SIZE]();

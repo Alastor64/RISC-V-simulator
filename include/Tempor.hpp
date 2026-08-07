@@ -20,7 +20,7 @@ class FlexTempor {
   public:
     FlexTempor();
     const word &operator=(const word &x);
-    Tempor &operator=(const Tempor &) = delete;
+    FlexTempor &operator=(const FlexTempor &) = delete;
     const word operator()() const;
     void update(); // only update function can call it!
 };
