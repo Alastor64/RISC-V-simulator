@@ -9,6 +9,7 @@ class LSQ : public Module {
 #else
   private:
 #endif
+    // offset在数据就绪后被清除
     Register op[LSQ_SIZE], addr[LSQ_SIZE], val[LSQ_SIZE], qa[LSQ_SIZE],
         qv[LSQ_SIZE], target[LSQ_SIZE], offet[LSQ_SIZE], count[LSQ_SIZE];
 
