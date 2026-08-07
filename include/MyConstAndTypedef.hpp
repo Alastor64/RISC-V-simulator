@@ -5,16 +5,16 @@ typedef const word cw;
 // #define DEBUG
 constexpr word memtick = 4;
 
-constexpr word BLOCK_TURN = 5;
+constexpr word BLOCK_TURN = 4;
 
 constexpr word LSQ_SIZE_WIDTH = 5;
 constexpr word LSQ_SIZE = 1 << LSQ_SIZE_WIDTH;
 constexpr word MAX_LSQ_PUSH = 4;
 constexpr word MAX_LSQ_WRITE_COUNT = MAX_LSQ_PUSH;
 
-constexpr word RS_SIZE_WIDTH = 6;
+constexpr word RS_SIZE_WIDTH = 5;
 constexpr word RS_SIZE = 1 << RS_SIZE_WIDTH;
-constexpr word MAX_RS_PUSH = 8;
+constexpr word MAX_RS_PUSH = 4;
 constexpr word MAX_RS_WRITE_COUNT = MAX_RS_PUSH;
 
 constexpr word ROB_SIZE_WIDTH = 6;
