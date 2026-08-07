@@ -8,7 +8,10 @@ void Issue::IssueLSQ() {
     cw rs1_addr = holder->rs1_addr.getv();
     cw tl = holder->rob.tl.getv();
     cw gene = holder->rob.gene.getv();
+    cw imm = holder->imm.getv();
     FlexTempor pushNum;
+    holder->rs.push(RSindex[0](), OP_ALU_add, ROBtag[0](), rval[1](), imm,
+                    rtag[1](), 0, 0);
     switch (op) {
     case OP_LSQ_lbu:
     case OP_LSQ_lb:
@@ -21,15 +24,27 @@ void Issue::IssueLSQ() {
             break;
         case OP_LSQ_lb:
             pushNum = 1 + 1 + 1;
+            holder->rs.push(RSindex[1](), OP_load_signed_bit, ROBtag[2](), 0, 0,
+                            ROBtag[1](), 0, 0);
             break;
         case OP_LSQ_lh:
             pushNum = 1 + 2 + 1;
+            holder->rs.push(RSindex[1](), OP_load_link_bit_u, ROBtag[3](), 0, 0,
+                            ROBtag[1](), ROBtag[2](), 0);
             break;
         case OP_LSQ_lhu:
             pushNum = 1 + 2 + 1;
+            holder->rs.push(RSindex[1](), OP_load_link_bit, ROBtag[3](), 0, 0,
+                            ROBtag[1](), ROBtag[2](), 0);
             break;
         case OP_LSQ_lw:
             pushNum = 1 + 4 + 2 + 1;
+            holder->rs.push(RSindex[1](), OP_load_link_bit_u, ROBtag[5](), 0, 0,
+                            ROBtag[1](), ROBtag[2](), 0);
+            holder->rs.push(RSindex[2](), OP_load_link_bit_u, ROBtag[6](), 0, 0,
+                            ROBtag[3](), ROBtag[4](), 0);
+            holder->rs.push(RSindex[3](), OP_load_link_half, ROBtag[7](), 0, 0,
+                            ROBtag[5](), ROBtag[6](), 0);
             break;
         default:
             throw "unexpected error in issue LSQ load";

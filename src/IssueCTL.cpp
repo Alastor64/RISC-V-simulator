@@ -46,12 +46,16 @@ void Issue::IssueCTL() {
             break;
         case OP_CTL_bltu:
             o = OP_b_bltu;
+        case OP_CTL_bne:
+            o = OP_b_bne;
             break;
+        default:
+            throw "unexpected error in issueCTL";
         }
-        o.update();
         holder->rs.push(RSindex[0](), o(), ROBtag[0](), rval[1](), rval[2](),
                         rtag[1](), rtag[2](), 0);
         holder->rs.push(RSindex[1](), OP_b_jump, ROBtag[1](), rd_addr, 0, 0,
                         ROBtag[0](), imm);
+        o.update();
     }
 }

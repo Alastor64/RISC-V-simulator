@@ -74,7 +74,7 @@ enum OP {
     OP_ROB_MEM,
     OP_ROB_TMP,
     OP_load_signed_bit,
-    OP_load_signed_half,
+    OP_load_link_bit_u,
     OP_load_link_bit,
     OP_load_link_half,
     OP_b_beq,

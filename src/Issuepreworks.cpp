@@ -1,14 +1,20 @@
 #include "CPU.hpp"
 #include "Issue.hpp"
+#include "MyConstAndTypedef.hpp"
 void Issue::makeindexs() {
     cw tl = holder->rob.tl.getv();
     cw gene = holder->rob.gene.getv();
+    cw CLR = holder->CLR.getv();
     for (word i = 0; i < MAX_ROB_PUSH; i++) {
         cw index = ((tl + i) & getLF1(ROB_SIZE_WIDTH));
         ROBindex[i] = index;
         ROBtag[i] = make_ROB_tag(index, gene, tl);
     }
     for (int i = 0; i < MAX_RS_PUSH; i++) {
+        if (CLR == CLEAR_FLAG) {
+            RSindex[i] = 0;
+            continue;
+        }
         for (int j = 0; j < RS_SIZE; j++) {
             if (holder->rs.opRead.read(j))
                 continue;
