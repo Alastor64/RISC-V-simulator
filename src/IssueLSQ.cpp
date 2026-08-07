@@ -12,6 +12,10 @@ void Issue::IssueLSQ() {
     FlexTempor pushNum;
     holder->rs.push(RSindex[0](), OP_ALU_add, ROBtag[0](), rval[1](), imm,
                     rtag[1](), 0, 0);
+    // cw sv0 = (rval[0]()) & getLF1(8);
+    // cw sv1 = (rval[0]() >> 8) & getLF1(8);
+    // cw sv2 = (rval[0]() >> 16) & getLF1(8);
+    // cw sv3 = (rval[0]() >> 24) & getLF1(8);
     switch (op) {
     case OP_LSQ_lbu:
     case OP_LSQ_lb:
@@ -21,11 +25,15 @@ void Issue::IssueLSQ() {
         switch (op) {
         case OP_LSQ_lbu:
             pushNum = 1 + 1;
+            holder->lsq.push(LSQindex[0](), OP_LSQ_load, 0, ROBtag[0](), 0,
+                             ROBtag[1](), 0);
             break;
         case OP_LSQ_lb:
             pushNum = 1 + 1 + 1;
             holder->rs.push(RSindex[1](), OP_load_signed_bit, ROBtag[2](), 0, 0,
                             ROBtag[1](), 0, 0);
+            holder->lsq.push(LSQindex[0](), OP_LSQ_load, 0, ROBtag[0](), 0,
+                             ROBtag[1](), 0);
             break;
         case OP_LSQ_lh:
             pushNum = 1 + 2 + 1;

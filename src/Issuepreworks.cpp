@@ -24,6 +24,20 @@ void Issue::makeindexs() {
             }
         }
     }
+    for (int i = 0; i < MAX_LSQ_PUSH; i++) {
+        if (CLR == CLEAR_FLAG) {
+            LSQindex[i] = 0;
+            continue;
+        }
+        for (int j = 0; j < LSQ_SIZE; j++) {
+            if (holder->lsq.opRead.read(j))
+                continue;
+            if (i == 0 || j > LSQindex[i - 1]()) {
+                LSQindex[i] = j;
+                break;
+            }
+        }
+    }
 }
 void Issue::checkROBtag() {
     cw addr[] = {holder->rd_addr.getv(), holder->rs1_addr.getv(),

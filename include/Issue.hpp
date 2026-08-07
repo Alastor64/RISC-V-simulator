@@ -15,6 +15,7 @@ class Issue : public Module {
     void makeindexs();
     Tempor ROBtag[MAX_ROB_PUSH], ROBindex[MAX_ROB_PUSH];
     Tempor RSindex[MAX_RS_PUSH];
+    Tempor LSQindex[MAX_LSQ_PUSH];
     Tempor rval[3], rtag[3];
 
   public:

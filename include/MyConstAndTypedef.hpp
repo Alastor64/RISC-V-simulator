@@ -3,15 +3,23 @@ typedef unsigned char byte;
 typedef unsigned int word;
 typedef const word cw;
 // #define DEBUG
+constexpr word BLOCK_TURN = 4;
+
+constexpr word LSQ_SIZE_WIDTH = 8;
+constexpr word LSQ_SIZE = 1 << LSQ_SIZE_WIDTH;
+constexpr word MAX_LSQ_PUSH = 4;
+constexpr word MAX_LSQ_WRITE_COUNT = MAX_LSQ_PUSH;
+
 constexpr word RS_SIZE_WIDTH = 8;
 constexpr word RS_SIZE = 1 << RS_SIZE_WIDTH;
 constexpr word MAX_RS_PUSH = 8;
 constexpr word MAX_RS_WRITE_COUNT = MAX_RS_PUSH;
-constexpr word BLOCK_TURN = 4;
-constexpr word MAX_ROB_PUSH = 8;
-constexpr word MAX_ROB_WRITE_COUNT = MAX_ROB_PUSH + 1;
+
 constexpr word ROB_SIZE_WIDTH = 8;
 constexpr word ROB_SIZE = 1 << ROB_SIZE_WIDTH; //> ROB_SIZE_WIDTH*BLOCK_TURN+1
+constexpr word MAX_ROB_PUSH = 8;
+constexpr word MAX_ROB_WRITE_COUNT = MAX_ROB_PUSH + 1;
+
 constexpr word FULL1 = -1;
 constexpr int MAX_REG_NUM = 1 << 5;
 constexpr word CLEAR_FLAG = 1;
@@ -84,4 +92,6 @@ enum OP {
     OP_b_bltu,
     OP_b_bne,
     OP_b_jump,
+    OP_LSQ_store,
+    OP_LSQ_load,
 };

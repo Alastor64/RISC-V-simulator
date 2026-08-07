@@ -2,6 +2,7 @@
 #include "Decode.hpp"
 #include "Fetch.hpp"
 #include "Issue.hpp"
+#include "LSQ.hpp"
 #include "Memory.hpp"
 #include "MyConstAndTypedef.hpp"
 #include "Port.hpp"
@@ -46,4 +47,5 @@ class CPU {
     RAT rat;
     ROB rob;
     RS rs;
+    LSQ lsq;
 };

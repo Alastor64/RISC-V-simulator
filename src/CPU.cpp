@@ -4,7 +4,7 @@
 CPU::CPU()
     : regWrite(reg, MAX_REG_NUM, 2), regRead(reg, MAX_REG_NUM), fetch(this),
       reseter(this), BP(this), decode(this), issue(this), rat(this), rob(this),
-      rs(this) {};
+      rs(this), lsq(this) {};
 Module::Module(CPU *_holder) : holder(_holder) {}
 
 void CPU::update() {
@@ -57,6 +57,7 @@ void CPU::init() {
         reg[i].write(0);
         reg[i].update();
     }
+    lsq.init();
 }
 void CPU::run() {
     mem.loadInstruction();
