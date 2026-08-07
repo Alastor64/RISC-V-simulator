@@ -2,12 +2,12 @@
 typedef unsigned char byte;
 typedef unsigned int word;
 typedef const word cw;
-#define DEBUG
+// #define DEBUG
 constexpr word memtick = 4;
 
 constexpr word BLOCK_TURN = 5;
 
-constexpr word LSQ_SIZE_WIDTH = 8;
+constexpr word LSQ_SIZE_WIDTH = 6;
 constexpr word LSQ_SIZE = 1 << LSQ_SIZE_WIDTH;
 constexpr word MAX_LSQ_PUSH = 4;
 constexpr word MAX_LSQ_WRITE_COUNT = MAX_LSQ_PUSH;

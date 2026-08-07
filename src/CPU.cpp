@@ -69,7 +69,7 @@ void CPU::init() {
 }
 void CPU::run() {
     long long tick = 0;
-    long long maxtick = 1e6;
+    long long maxtick = 1e7;
     mem.loadInstruction();
     init();
     while (tick < maxtick) {
@@ -88,7 +88,8 @@ void CPU::run() {
         update();
 
 #ifdef DEBUG
-        print();
+        printf("tick:%lld\n", tick);
+        // print();
 #endif
 
         if (terminate.getv() == TERMINATE)
