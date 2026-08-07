@@ -31,23 +31,7 @@ void Issue::run() {
         case OP_ALU_sltu:
         case OP_other_auipc:
         case OP_other_lui:
-            holder->rob.push(tl, OP_ROB_ALU, rd_addr, ROBtag[0]());
-            holder->rob.tlAdd.add(1);
-            holder->rat.RATWrite.write(rd_addr, ROBtag[0]());
-            if (op == OP_other_auipc) {
-                holder->rs.push(RSindex[0](), OP_ALU_add, ROBtag[0](), rs1_addr,
-                                imm, 0, 0, 0);
-            } else if (op == OP_other_lui) {
-                holder->rs.push(RSindex[0](), OP_ALU_add, ROBtag[0](), 0, imm,
-                                0, 0, 0);
-            } else {
-                if (rs2_addr == NOT_A_REG_ADDR)
-                    holder->rs.push(RSindex[0](), op, ROBtag[0](), rval[1](),
-                                    imm, rtag[1](), 0, 0);
-                else
-                    holder->rs.push(RSindex[0](), op, ROBtag[0](), rval[1](),
-                                    rval[2](), rtag[1](), rtag[2](), 0);
-            }
+            IssueALU();
             break;
         case OP_CTL_beq:
         case OP_CTL_bge:
@@ -55,16 +39,9 @@ void Issue::run() {
         case OP_CTL_blt:
         case OP_CTL_bltu:
         case OP_CTL_bne:
-            holder->rob.push(tl, OP_ROB_TMP, 0, ROBtag[0]());
-            holder->rob.push(ROBindex[1](), OP_ROB_CTL, PC_guess, ROBtag[1]());
-            holder->rob.tlAdd.add(2);
-            break;
         case OP_CTL_jal:
         case OP_CTL_jalr:
-            holder->rob.push(tl, OP_ROB_ALU, rd_addr, ROBtag[0]());
-            holder->rat.RATWrite.write(rd_addr, ROBtag[0]());
-            holder->rob.push(ROBindex[1](), OP_ROB_CTL, PC_guess, ROBtag[1]());
-            holder->rob.tlAdd.add(2);
+            IssueCTL();
             break;
         case OP_LSQ_lb:
         case OP_LSQ_lbu:
@@ -122,6 +99,7 @@ void Issue::checkROBtag() {
         if (addr[i] == 0 || addr[i] >= MAX_REG_NUM) {
             rval[i] = 0;
             rtag[i] = 0;
+            continue;
         }
         cw t = holder->rat.RATRead.read(addr[i]);
         if (t == 0) {

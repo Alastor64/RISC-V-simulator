@@ -9,6 +9,8 @@ class Issue : public Module {
   private:
 #endif
     void IssueLSQ();
+    void IssueALU();
+    void IssueCTL();
     void checkROBtag();
     void makeindexs();
     Tempor ROBtag[MAX_ROB_PUSH], ROBindex[MAX_ROB_PUSH];

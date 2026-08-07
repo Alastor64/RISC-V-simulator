@@ -77,4 +77,11 @@ enum OP {
     OP_load_signed_half,
     OP_load_link_bit,
     OP_load_link_half,
+    OP_b_beq,
+    OP_b_bge,
+    OP_b_bgeu,
+    OP_b_blt,
+    OP_b_bltu,
+    OP_b_bne,
+    OP_b_jump,
 };

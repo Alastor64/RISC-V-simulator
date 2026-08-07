@@ -4,12 +4,12 @@
 #include "MyConstAndTypedef.hpp"
 RS::RS(CPU *_)
     : Module(_), opRead(op, RS_SIZE), opWrite(op, RS_SIZE, MAX_RS_WRITE_COUNT),
-      tagWrite(op, RS_SIZE, MAX_RS_WRITE_COUNT),
-      v1Write(op, RS_SIZE, MAX_RS_WRITE_COUNT),
-      v2Write(op, RS_SIZE, MAX_RS_WRITE_COUNT),
-      q1Write(op, RS_SIZE, MAX_RS_WRITE_COUNT),
-      q2Write(op, RS_SIZE, MAX_RS_WRITE_COUNT),
-      immWrite(op, RS_SIZE, MAX_RS_WRITE_COUNT) {}
+      tagWrite(tag, RS_SIZE, MAX_RS_WRITE_COUNT),
+      v1Write(v1, RS_SIZE, MAX_RS_WRITE_COUNT),
+      v2Write(v2, RS_SIZE, MAX_RS_WRITE_COUNT),
+      q1Write(q1, RS_SIZE, MAX_RS_WRITE_COUNT),
+      q2Write(q2, RS_SIZE, MAX_RS_WRITE_COUNT),
+      immWrite(imm, RS_SIZE, MAX_RS_WRITE_COUNT) {}
 void RS::update() {
     CDBflag.update();
     for (word i = 0; i < RS_SIZE; i++) {

@@ -4,6 +4,8 @@
 #include "Tempor.hpp"
 void RS::ALU() {
     for (word i = 0; i < RS_SIZE; i++) {
+        if (op[i].getv() == 0)
+            continue;
         if (q1[i].getv() || q2[i].getv())
             continue;
         if (CDBflag())
@@ -55,12 +57,7 @@ void RS::calc(cw &o, cw &r1, cw &r2, cw &r3) {
     case OP_ALU_sltu:
         result = (r1 < r2 ? 1 : 0);
         break;
-    case OP_CTL_beq:
-    case OP_CTL_bge:
-    case OP_CTL_bgeu:
-    case OP_CTL_blt:
-    case OP_CTL_bltu:
-    case OP_CTL_bne:
+    case OP_b_jump:
         if (r2) {
             result = r1 + r3;
         } else {
