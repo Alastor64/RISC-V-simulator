@@ -32,6 +32,18 @@ void LSQ::run() {
     cw CLR = holder->CLR.getv();
     countEmpty();
     if (CLR == CLEAR_FLAG) {
+        for (word i = 0; i < LSQ_SIZE; i++) {
+            if (op[i].getv() == OP_LSQ_store && count[i].getv() > 0)
+                continue;
+            op[i].write(0);
+            addr[i].write(0);
+            val[i].write(0);
+            qa[i].write(0);
+            qv[i].write(0);
+            target[i].write(0);
+            offet[i].write(0);
+            count[i].write(0);
+        }
         holder->blockLSQ.write(0);
     } else {
         holder->blockLSQ.write(emptySize() <= MAX_LSQ_PUSH * BLOCK_TURN);
@@ -77,8 +89,8 @@ void LSQ::push(cw &index, cw &_op, cw &_val, cw &_qa, cw &_qv, cw &_target,
 }
 void LSQ::countEmpty() {
     preEmpty[0] = 0;
-    for (word i = 0; i < RS_SIZE - 1; i++) {
+    for (word i = 0; i < LSQ_SIZE - 1; i++) {
         preEmpty[i + 1] = preEmpty[i]() + (op[i].getv() == 0);
     }
-    emptySize = preEmpty[RS_SIZE - 1]() + (op[RS_SIZE - 1].getv() == 0);
+    emptySize = preEmpty[LSQ_SIZE - 1]() + (op[LSQ_SIZE - 1].getv() == 0);
 }
