@@ -57,6 +57,24 @@ void RS::calc(cw &o, cw &r1, cw &r2, cw &r3) {
     case OP_ALU_sltu:
         result = (r1 < r2 ? 1 : 0);
         break;
+    case OP_b_beq:
+        result = (r1 == r2 ? 1 : 0);
+        break;
+    case OP_b_bge:
+        result = (int(r1) >= int(r2) ? 1 : 0);
+        break;
+    case OP_b_bgeu:
+        result = (r1 >= r2 ? 1 : 0);
+        break;
+    case OP_b_blt:
+        result = (int(r1) < int(r2) ? 1 : 0);
+        break;
+    case OP_b_bltu:
+        result = (r1 < r2 ? 1 : 0);
+        break;
+    case OP_b_bne:
+        result = (r1 != r2 ? 1 : 0);
+        break;
     case OP_b_jump:
         if (r2) {
             result = r1 + r3;

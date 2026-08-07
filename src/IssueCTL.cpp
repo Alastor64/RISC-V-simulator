@@ -25,7 +25,7 @@ void Issue::IssueCTL() {
                             imm, 0, 0, 0);
         else
             holder->rs.push(RSindex[1](), OP_ALU_add, ROBtag[1](), rval[1](),
-                            imm, 0, rtag[1](), 0);
+                            imm, rtag[1](), 0, 0);
     } else {
         holder->rob.push(tl, OP_ROB_TMP, 0, ROBtag[0]());
         holder->rob.push(ROBindex[1](), OP_ROB_CTL, PC_guess, ROBtag[1]());

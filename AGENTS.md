@@ -9,3 +9,5 @@ design_old_easy_unfinished.md 与 design_old.md 属于过时的设计，务必�
 当你静态检查时，要注意每周期所有模块、port、tempor、register都要update，且同一模块内port、tempor要在register之前update
 注意到port、tempor、register在一周期内有使用次数限制，你要特别关注
 我们只在取指时考虑阻塞，所以ROB、LSQ、RS需留足量空间保证在途指令最坏情况下也不会爆炸
+对于寄存器不初始化的问题，你应该检查当前写法会不会真的产生会影响结果的垃圾值，还是说垃圾值能被及时覆盖
+你要仔细阅读tempor.hpp和port.hpp的实现，不要猜那些类的意思
