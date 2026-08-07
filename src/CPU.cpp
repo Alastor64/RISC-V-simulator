@@ -68,9 +68,12 @@ void CPU::init() {
     lsq.init();
 }
 void CPU::run() {
+    long long tick = 0;
+    long long maxtick = 1e10;
     mem.loadInstruction();
     init();
-    while (1) {
+    while (tick < maxtick) {
+        tick++;
 
         fetch.run();
         BP.run();
@@ -91,5 +94,9 @@ void CPU::run() {
         if (terminate.getv() == TERMINATE)
             break;
     }
-    std::printf("%d\n", (reg[10].getv() & getLF1(8)));
+    if (tick >= maxtick) {
+        std::printf("too many ticks,shut down now\n");
+    } else {
+        std::printf("%d\n", (reg[10].getv() & getLF1(8)));
+    }
 }

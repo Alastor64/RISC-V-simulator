@@ -2,7 +2,7 @@
 typedef unsigned char byte;
 typedef unsigned int word;
 typedef const word cw;
-// #define DEBUG
+#define DEBUG
 constexpr word memtick = 4;
 
 constexpr word BLOCK_TURN = 5;
