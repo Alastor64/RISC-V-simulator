@@ -12,12 +12,12 @@ constexpr word LSQ_SIZE = 1 << LSQ_SIZE_WIDTH;
 constexpr word MAX_LSQ_PUSH = 4;
 constexpr word MAX_LSQ_WRITE_COUNT = MAX_LSQ_PUSH;
 
-constexpr word RS_SIZE_WIDTH = 8;
+constexpr word RS_SIZE_WIDTH = 6;
 constexpr word RS_SIZE = 1 << RS_SIZE_WIDTH;
 constexpr word MAX_RS_PUSH = 8;
 constexpr word MAX_RS_WRITE_COUNT = MAX_RS_PUSH;
 
-constexpr word ROB_SIZE_WIDTH = 8;
+constexpr word ROB_SIZE_WIDTH = 6;
 constexpr word ROB_SIZE = 1 << ROB_SIZE_WIDTH; //> ROB_SIZE_WIDTH*BLOCK_TURN+1
 constexpr word MAX_ROB_PUSH = 8;
 constexpr word MAX_ROB_WRITE_COUNT = MAX_ROB_PUSH + 1;
